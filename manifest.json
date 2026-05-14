@@ -1,0 +1,15 @@
+{
+    "name": "모바일 가계부",
+    "short_name": "가계부",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#0f172a",
+    "theme_color": "#0f172a",
+    "icons": [
+        {
+            "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Watermelon_icon.svg/1024px-Watermelon_icon.svg.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ]
+}
