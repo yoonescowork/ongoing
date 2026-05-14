@@ -24,80 +24,9 @@ const recentList = document.getElementById('recentList');
 const homeTotalAmount = document.getElementById('homeTotalAmount');
 const addTransactionForm = document.getElementById('addTransactionForm');
 
-// Initial Data Setup
-const RAW_CSV_DATA = `날짜,대분류,소분류,내용,금액 ,결재수단,
-4월 20일,변동비,커피,커피,11000,신용카드,
-4월 19일,,커피,커피,12000,신용카드,
-4월 19일,,장보기,마트에서 장 봄,15430,신용카드,
-4월 19일,,경조사/선물,엄마 간장,13890,신용카드,
-4월 18일,,교통비,택시,24900,신용카드,
-4월 18일,,장보기,마트에서 장 봄,32730,신용카드,
-4월 18일,,커피,커피,2900,신용카드,
-4월 17일,,교통비,택시,22900,신용카드,
-4월 17일,,외식,저녁 외식,21000,신용카드,
-4월 17일,,커피,커피,7500,신용카드,
-4월 17일,,커피,커피,3000,신용카드,
-4월 16일,,교통비,따릉이,1000,체크카드,
-4월 16일,,쇼핑,인터넷쇼핑,46700,체크카드,
-4월 15일,,쇼핑,생리대,31000,신용카드,
-4월 15일,,커피,커피,3000,신용카드,
-4월 15일,,외식,점심(돈까스),12000,신용카드,
-4월 14일,,외식,점심(라면),4000,신용카드,
-4월 14일,,외식,점심(김밥),6000,신용카드,
-4월 13일,,외식,점심(짜장면),9000,신용카드,
-4월 13일,,커피,커피,6300,신용카드,
-4월 13일,고정비,통신,핸드폰요금,37500,신용카드,
-4월 13일,,커피,스타벅스 충전,10000,신용카드,
-4월 13일,,교통비,택시,21900,신용카드,
-4월 12일,,외식,주말 점심,13500,체크카드,
-4월 21일,,외식,점심,8300,현금,
-4월 21일,,커피,커피,4000,신용카드,
-4월 22일,,장보기,쌀,12980,신용카드,
-4월 22일,,커피,스타벅스 충전,10000,신용카드,
-4월 22일,,외식,주말 외식,23200,신용카드,
-4월 12일,,장보기,쿠팡(장봄),16360,신용카드,
-4월 12일,,병원/약국,약국,8000,신용카드,
-4월 11일,,기타,생수 구입,900,신용카드,
-4월 11일,,커피,빵,39000,신용카드,
-4월 11일,,쇼핑,기념품(옷),33800,신용카드,
-4월 11일,,여행,여행 경비,80000,현금,
-4월 11일,,쇼핑,기념품(소품),6500,신용카드,
-4월 10일,,가스비,가스비,47280,신용카드,
-4월 10일,,커피,커피,5000,신용카드,
-4월 10일,,외식,점심(라멘),11500,신용카드,
-4월 10일,,커피,커피,4000,신용카드,
-4월 10일,,커피,커피,6900,신용카드,
-4월 9일,,외식,점심 외식,14000,신용카드,
-4월 9일,,통신,인터넷,20900,신용카드,
-4월 8일,,커피,커피,6800,신용카드,
-4월 7일,,병원/약국,약국,20900,신용카드,
-4월 7일,,커피,커피,7000,신용카드,
-4월 7일,,커피,커피,4000,신용카드,
-4월 6일,,커피,커피,25800,신용카드,
-4월 5일,,장보기,마트에서 장 봄,20230,신용카드,
-4월 4일,,장보기,쿠팡에서 장 봄,16260,신용카드,
-4월 4일,,외식,주말 점심,40000,신용카드,
-4월 3일,,외식,김밥,10000,신용카드,
-4월 2일,,외식,닭강정,24000,신용카드,
-4월 2일,,커피,커피,5500,신용카드,
-4월 2일,,커피,커피,4000,신용카드,
-4월 1일,,장보기,마트에서 장 봄,9980,신용카드,
-4월 1일,,커피,편의점,2200,신용카드,
-4월 23일,,커피,커피,5000,신용카드,
-4월 24일,,커피,커피,8900,신용카드,
-4월 24일,,외식,점심 외식,12000,신용카드,
-4월 24일,,외식,저녁 외식,34000,신용카드,
-4월 24일,,교통비,택시,24200,신용카드,
-4월 24일,,커피,도넛,13700,신용카드,
-4월 25일,,쇼핑,다이소(생활용품),2000,신용카드,
-4월 25일,,커피,커피,5200,신용카드,
-4월 25일,,기타,로또,10000,현금,
-4월 25일,,쇼핑,쇼핑(유니클로),64800,신용카드,
-4월 26일,,커피,간식,5220,신용카드,
-4월 26일,,커피,CU,3600,신용카드,
-4월 26일,,교통비,택시,19000,신용카드,
-4월 27일,,커피,커피,5300,신용카드,
-4월 27일,,외식,저녁 외식,20000,신용카드`;
+const loginOverlay = document.getElementById('loginOverlay');
+const loginBtnOverlay = document.getElementById('loginBtnOverlay');
+const skipLoginBtn = document.getElementById('skipLoginBtn');
 
 // State
 let transactions = [];
@@ -119,7 +48,7 @@ function init() {
     auth.onAuthStateChanged(async (user) => {
         if (user) {
             currentUser = user;
-            loginBtn.style.display = 'none';
+            loginOverlay.classList.remove('active');
             logoutBtn.style.display = 'inline-block';
             
             // Check for local transactions to migrate
@@ -147,33 +76,14 @@ function init() {
             loadFromFirebase();
         } else {
             currentUser = null;
-            loginBtn.style.display = 'inline-block';
             logoutBtn.style.display = 'none';
             if (unsubscribeFirestore) {
                 unsubscribeFirestore();
             }
             loadFromLocalStorage();
-            checkAndLoadInitialCSV();
+            updateUI();
         }
     });
-}
-
-function checkAndLoadInitialCSV() {
-    if(transactions.length === 0) {
-        Papa.parse(RAW_CSV_DATA, {
-            complete: function(results) {
-                parseCSVData(results.data);
-                if (currentUser) {
-                    // Do not push to DB automatically to save writes on demo
-                } else {
-                    saveToLocalStorage();
-                }
-                updateUI();
-            }
-        });
-    } else {
-        updateUI();
-    }
 }
 
 function loadFromFirebase() {
@@ -232,15 +142,23 @@ function setupEventListeners() {
     });
 
     // Auth
-    loginBtn.addEventListener('click', () => {
+    loginBtnOverlay.addEventListener('click', () => {
         auth.signInWithPopup(provider).catch(error => {
             console.error(error);
             alert('로그인 중 오류가 발생했습니다.');
         });
     });
 
+    skipLoginBtn.addEventListener('click', () => {
+        loginOverlay.classList.remove('active');
+    });
+
     logoutBtn.addEventListener('click', () => {
-        auth.signOut();
+        auth.signOut().then(() => {
+            loginOverlay.classList.add('active');
+            transactions = [];
+            updateUI();
+        });
     });
 
     // CSV Import / Export

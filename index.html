@@ -24,9 +24,6 @@
         <header>
             <h1>가계부</h1>
             <div>
-                <button id="loginBtn" class="icon-btn" title="구글 로그인">
-                    <span class="material-icons-round">account_circle</span>
-                </button>
                 <button id="logoutBtn" class="icon-btn" title="로그아웃" style="display: none;">
                     <span class="material-icons-round">logout</span>
                 </button>
@@ -164,6 +161,20 @@
                 <span>AI</span>
             </button>
         </nav>
+
+        <!-- Login Overlay -->
+        <div id="loginOverlay" class="login-overlay active">
+            <div class="login-card glass">
+                <span class="material-icons-round login-icon">account_balance_wallet</span>
+                <h2>스마트 가계부</h2>
+                <p>기기 간 완벽한 동기화를 위해<br>구글 계정으로 로그인해주세요.</p>
+                <button id="loginBtnOverlay" class="btn-primary" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="G" width="20" height="20">
+                    구글 계정으로 시작하기
+                </button>
+                <button id="skipLoginBtn" class="btn-text">로그인 없이 오프라인으로 사용하기</button>
+            </div>
+        </div>
     </div>
 
     <script src="app.js"></script>
