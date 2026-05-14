@@ -44,6 +44,14 @@ function init() {
     document.getElementById('inputDate').value = new Date().toISOString().split('T')[0];
     setupEventListeners();
 
+    // Check redirect result for mobile auth errors
+    auth.getRedirectResult().catch(error => {
+        console.error(error);
+        if (error.code !== 'auth/redirect-cancelled-by-user') {
+            alert('로그인 중 오류가 발생했습니다: ' + error.message);
+        }
+    });
+
     // Setup Auth Listener
     auth.onAuthStateChanged(async (user) => {
         if (user) {
@@ -143,10 +151,8 @@ function setupEventListeners() {
 
     // Auth
     loginBtnOverlay.addEventListener('click', () => {
-        auth.signInWithPopup(provider).catch(error => {
-            console.error(error);
-            alert('로그인 중 오류가 발생했습니다.');
-        });
+        // 모바일 환경(Safari 등)에서 팝업 차단을 막기 위해 Redirect 방식 사용
+        auth.signInWithRedirect(provider);
     });
 
     skipLoginBtn.addEventListener('click', () => {
