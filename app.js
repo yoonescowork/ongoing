@@ -151,8 +151,18 @@ function setupEventListeners() {
 
     // Auth
     loginBtnOverlay.addEventListener('click', () => {
-        // 모바일 환경(Safari 등)에서 팝업 차단을 막기 위해 Redirect 방식 사용
-        auth.signInWithRedirect(provider);
+        const originalText = loginBtnOverlay.innerHTML;
+        loginBtnOverlay.innerHTML = '로그인 진행 중...';
+        
+        auth.signInWithPopup(provider).then(() => {
+            loginBtnOverlay.innerHTML = originalText;
+        }).catch(error => {
+            console.error(error);
+            loginBtnOverlay.innerHTML = originalText;
+            if (error.code !== 'auth/popup-closed-by-user') {
+                alert('로그인 중 오류가 발생했습니다: ' + error.message);
+            }
+        });
     });
 
     skipLoginBtn.addEventListener('click', () => {
